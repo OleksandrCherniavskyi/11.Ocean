@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+<table id="image_list">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>origin_list</th>
+                        <th>200</th>
+                        <th>400</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for image in origin_images %}
+
+                        <tr>
+                            <td>
+                                    {{ image.id }}</td>
+                            <td>
+                                    <a href="http://127.0.0.1:8000/media/{{ image.origin_image }}">{{ image.name }}</a>{% endfor %}
+
+                            </td>
+
+                            <td>
+
+                            </td>
+
+                            <td>
+                                dwdw
+
+                            </td>
+
+
+                        </tr>
+
+                </tbody>
+            </table>
+
+{% endblock %}
