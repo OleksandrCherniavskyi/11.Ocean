@@ -11,27 +11,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                        {% for image in origin_images %}
 
+                {% for image in image_list %}
                         <tr>
                             <td>
-                                    {{ image.id }}</td>
+                                {{ image.id }}
+
                             <td>
-                                    <a href="http://127.0.0.1:8000/media/{{ image.origin_image }}">{{ image.name }}</a>{% endfor %}
+                                <a href="\media\{{ image.origin_image }}">{{ image.origin_image }}</a>
 
                             </td>
 
                             <td>
-
+                                <a href="\media\{{ image.thumbnail_200 }}">{{ image.thumbnail_200 }}</a>
                             </td>
 
                             <td>
-                                dwdw
-
+                                <a href="\media\{{ image.thumbnail_400 }}">{{ image.thumbnail_400 }}</a>
+                                {% endfor %}
                             </td>
+
 
 
                         </tr>
+
+
 
                 </tbody>
             </table>

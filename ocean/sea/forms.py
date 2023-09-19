@@ -5,4 +5,5 @@ from .models import Image
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['name', 'origin_image']
+        fields = ['origin_image']
+

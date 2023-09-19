@@ -6,8 +6,8 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Upload</a>
-      <a class="nav-item nav-link" href="#">Image list</a>
+      <a class="nav-item nav-link" href="{% url 'upload_image' %}">Upload image</a>
+      <a class="nav-item nav-link" href="{% url 'image_list' %}">Image list</a>
       <a class="nav-item nav-link disabled" href="{% url 'logout' %}">Logout</a>
     </div>
   </div>
