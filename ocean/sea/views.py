@@ -1,6 +1,7 @@
 import logging
 import os
-
+from .decorators import group_required
+from django.db.models import Q
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -92,24 +93,72 @@ def upload_image(request):
 
 
 
-@group_required
+
 @login_required
 def image_list(request):
     # Retrieve only the images uploaded by the current user
     image_list = Image.objects.filter(uploaded_by=request.user).all()
+    thumbnail_200 = Image.objects.filter(
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Enterprise') |
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Basic') |
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Premium')
+    ).values('thumbnail_200')
 
 
+    thumbnail_400 = Image.objects.filter(
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Enterprise') |
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Premium')
+    ).values('thumbnail_400')
+
+    origin_image = Image.objects.filter(
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Enterprise') |
+        Q(uploaded_by=request.user, uploaded_by__groups__name='Premium')
+    ).values('origin_image')
 
     # Create an empty list to store the resized images
 
-
-
     context = {
         'image_list': image_list,
+        'thumbnail_200': thumbnail_200,
+        'thumbnail_400': thumbnail_400,
+        'origin_image': origin_image
 
         }
     return render(request, 'image_list.html', context)
 
+@group_required('Basic')
+def basic(request):
+    thumbnail_200 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_200')
+
+    context = {
+        'thumbnail_200': thumbnail_200}
+    return render(request, 'basic.html', context)
+
+@group_required('Premium')
+def premium(request):
+    thumbnail_200 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_200')
+    thumbnail_400 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_400')
+    origin_image = Image.objects.filter(uploaded_by=request.user).values('origin_image')
+
+    context = {
+        'thumbnail_200': thumbnail_200,
+        'thumbnail_400': thumbnail_400,
+        'origin_image': origin_image
+    }
+    return render(request, 'premium.html', context)
+
+@group_required('Enterprise')
+def enterprise(request):
+    thumbnail_200 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_200')
+    thumbnail_400 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_400')
+    origin_image = Image.objects.filter(uploaded_by=request.user).values('origin_image')
+
+    context = {
+        'thumbnail_200': thumbnail_200,
+        'thumbnail_400': thumbnail_400,
+        'origin_image': origin_image
+    }
+    return render(request, 'enterprise.html', context)
 
 
 def success(request):

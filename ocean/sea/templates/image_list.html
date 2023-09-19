@@ -4,30 +4,41 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>origin_list</th>
+                        <th>Name</th>
                         <th>200</th>
                         <th>400</th>
+                        <th>Origin image</th>
 
                     </tr>
                 </thead>
                 <tbody>
 
-                {% for image in image_list %}
+
+
+
                         <tr>
                             <td>
-                                {{ image.id }}
-
+                                {% for image in image_list %}
+                                    {{ image.id }}<br>
+                                {% endfor %}
                             <td>
-                                <a href="\media\{{ image.origin_image }}">{{ image.origin_image }}</a>
-
+                                {% for image in image_list %}
+                                    {{ image.origin_image }}<br>
+                                {% endfor %}
                             </td>
-
                             <td>
-                                <a href="\media\{{ image.thumbnail_200 }}">{{ image.thumbnail_200 }}</a>
+                                {% for image in thumbnail_200 %}
+                                    <a href="\media\{{ image.thumbnail_200 }}"> 200 px</a><br>
+                                {% endfor %}
                             </td>
-
                             <td>
-                                <a href="\media\{{ image.thumbnail_400 }}">{{ image.thumbnail_400 }}</a>
+                                {% for image in thumbnail_400 %}
+                                    <a href="\media\{{ image.thumbnail_400 }}"> 400 px</a><br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for image in origin_image %}
+                                    <a href="\media\{{ image.origin_image }}"> origin image </a><br>
                                 {% endfor %}
                             </td>
 
@@ -39,5 +50,9 @@
 
                 </tbody>
             </table>
+<tbody>
+
+    </tbody>
+
 
 {% endblock %}
