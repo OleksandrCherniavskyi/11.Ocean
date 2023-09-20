@@ -126,40 +126,6 @@ def image_list(request):
         }
     return render(request, 'image_list.html', context)
 
-@group_required('Basic')
-def basic(request):
-    thumbnail_200 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_200')
-
-    context = {
-        'thumbnail_200': thumbnail_200}
-    return render(request, 'basic.html', context)
-
-@group_required('Premium')
-def premium(request):
-    thumbnail_200 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_200')
-    thumbnail_400 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_400')
-    origin_image = Image.objects.filter(uploaded_by=request.user).values('origin_image')
-
-    context = {
-        'thumbnail_200': thumbnail_200,
-        'thumbnail_400': thumbnail_400,
-        'origin_image': origin_image
-    }
-    return render(request, 'premium.html', context)
-
-@group_required('Enterprise')
-def enterprise(request):
-    thumbnail_200 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_200')
-    thumbnail_400 = Image.objects.filter(uploaded_by=request.user).values('thumbnail_400')
-    origin_image = Image.objects.filter(uploaded_by=request.user).values('origin_image')
-
-    context = {
-        'thumbnail_200': thumbnail_200,
-        'thumbnail_400': thumbnail_400,
-        'origin_image': origin_image
-    }
-    return render(request, 'enterprise.html', context)
-
 
 def success(request):
     return HttpResponse('successfully uploaded')

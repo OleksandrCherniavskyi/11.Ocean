@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import upload_image, image_list, success, index, login_view, logout_view, basic, premium, enterprise
+from .views import upload_image, image_list, success, index, login_view, logout_view
 
 
 urlpatterns = [
@@ -15,9 +15,9 @@ urlpatterns = [
     path('image_list', image_list, name='image_list'),
     path('success', success, name='success'),
 
-    path('basic', basic, name='basic'),
-    path('premium', premium, name='premium'),
-    path('enterprise', enterprise, name='enterprise')
+    #path('basic', basic, name='basic'),
+    #path('premium', premium, name='premium'),
+    #path('enterprise', enterprise, name='enterprise')
 
 ]
 
