@@ -1,6 +1,4 @@
-import logging
-import os
-from .decorators import group_required
+
 from django.db.models import Q
 from django.conf import settings
 from django.shortcuts import render, redirect
