@@ -1,4 +1,4 @@
-from django.contrib import admin
+
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
@@ -14,10 +14,6 @@ urlpatterns = [
     path('upload_image', upload_image, name='upload_image'),
     path('image_list', image_list, name='image_list'),
     path('success', success, name='success'),
-
-    #path('basic', basic, name='basic'),
-    #path('premium', premium, name='premium'),
-    #path('enterprise', enterprise, name='enterprise')
 
 ]
 

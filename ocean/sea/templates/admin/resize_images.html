@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+  <div class="module">
+    <form method="post" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Resize Selected Images">
+    </form>
+  </div>
+
+  <div class="results">
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for image in images %}
+          <tr>
+            <td><a href="{{ image.origin_image.url }}" target="_blank">{{ image.origin_image.name }}</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
