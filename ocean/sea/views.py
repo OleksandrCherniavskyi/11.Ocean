@@ -1,21 +1,36 @@
-
 from django.db.models import Q
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UploadForm
+from .forms import UploadForm, UserCreationForm, CreateUserForm
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Image
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from PIL import Image as PILImage
-from io import BytesIO
-
+from django.contrib.auth.models import Group
 
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    return render(request, 'upload_image.html')
+        return HttpResponseRedirect('/login')
+
+    return HttpResponseRedirect('/image_list')
+
+def registerPage(request):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='Basic')
+            user.groups.add(group)
+
+            return redirect('login')
+    context = {'form': form}
+    return render(request, 'sea/register.html', context)
+
 
 def login_view(request):
     if request.method == "POST":
@@ -24,30 +39,20 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("image_list"))
         else:
-            return render(request, "login.html", {"message": "Invalid credentials."})
-    return render(request, "login.html")
+            return render(request, "sea/login.html", {"message": "Invalid credentials."})
+    return render(request, "sea/login.html")
 
 def logout_view(request):
     logout(request)
-    return render(request, "login.html", {"message": "Logged out."})
+    return render(request, "sea/login.html", {"message": "Logged out."})
 
-def resize_image(image, new_width, new_height):
-    # Open the image using PIL
-    pil_image = PILImage.open(image)
 
-    # Resize the image
-    pil_image = pil_image.resize((new_width, new_height), PILImage.ANTIALIAS)
-
-    # Save the resized image to a BytesIO buffer
-    output_buffer = BytesIO()
-    pil_image.save(output_buffer, format='JPEG')  # You can specify the desired format (JPEG, PNG, etc.)
-
-    return output_buffer
-
-@login_required
+#@login_required
 def upload_image(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
 
@@ -86,14 +91,16 @@ def upload_image(request):
             return redirect('image_list')
     else:
         form = UploadForm()
-    return render(request, 'upload_image.html', {'form': form})
+    return render(request, 'sea/upload_image.html', {'form': form})
 
 
 
 
 
-@login_required
+#@login_required
 def image_list(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
     # Retrieve only the images uploaded by the current user
     image_list = Image.objects.filter(uploaded_by=request.user).all()
     thumbnail_200 = Image.objects.filter(
@@ -122,8 +129,4 @@ def image_list(request):
         'origin_image': origin_image
 
         }
-    return render(request, 'image_list.html', context)
-
-
-def success(request):
-    return HttpResponse('successfully uploaded')
+    return render(request, 'sea/image_list.html', context)

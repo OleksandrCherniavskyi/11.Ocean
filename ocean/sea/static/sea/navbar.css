@@ -1,0 +1,44 @@
+/* navbar.css */
+
+/* Styles for the navbar container */
+.mybar {
+    background-color: #6499E9;
+    overflow: hidden;
+    color: white;
+}
+
+/* Styles for the left side of the navbar */
+.navbar-left-side {
+    float: left;
+}
+
+/* Styles for navbar links */
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+}
+
+/* Styles for disabled links */
+.disabled {
+    opacity: 0.5;
+    padding: 10px;
+    display: inline-block;
+    text-decoration: none;
+
+
+}
+
+/* Styles for the right side of the navbar */
+.navbar-right-side {
+    float: right;
+}
+
+/* Styles for the status section */
+.status {
+    display: inline-block;
+    padding: 10px;
+}
+
+/* Additional styles as needed */

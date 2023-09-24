@@ -1,0 +1,27 @@
+/* Styles for the image list table */
+.image-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.image-list-table th,
+.image-list-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.image-list-table th {
+    background-color: #6499E9;
+    color: white;
+}
+
+.image-list-table td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.image-list-table td a:hover {
+    text-decoration: underline;
+}

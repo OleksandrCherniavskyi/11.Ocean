@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-<table id="image_list">
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'sea/image_list.css' %}">
+
+<table id="image_list" class="image-list-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -12,10 +16,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
-
-
-
                         <tr>
                             <td>
                                 {% for image in image_list %}
